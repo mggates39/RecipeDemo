@@ -41,6 +41,9 @@ class Window(Frame):
 
         # place button at (0,0)
         exit_button.place(x=0, y=0)
+        
+        test_button = Button(self, text="Test", command=self.button_click_message)
+        test_button.place(x=50, y=0)
 
         self.label = Label(text="", fg="Red", font=("Helvetica", 18))
         self.label.place(x=40, y=40)
@@ -61,13 +64,13 @@ class Window(Frame):
     def button_click_message(self):
         self.message_number += 1
         if self.message_number == 1:
-            tkinter.messagebox.showinfo('title', 'Info message')
+            tkinter.messagebox.showinfo('title', 'Info message text is here')
 
         if self.message_number == 2:
-            tkinter.messagebox.showwarning('title', 'Warning message')
+            tkinter.messagebox.showwarning('title', 'Warning message text is here')
 
         if self.message_number == 3:
-            tkinter.messagebox.showerror('title', 'Error message')
+            tkinter.messagebox.showerror('title', 'Error message text is here')
             self.message_number = 0
 
     def button_click_connect(self):
@@ -77,7 +80,7 @@ class Window(Frame):
         self.data.create_table()
 
     def button_click_retrieve(self):
-        list_items = self.data.fetch_data(year=1960)
+        list_items = self.data.fetch_data(year=1975)
         for item in list_items:
             self.lb.insert('end', item)
 
