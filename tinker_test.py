@@ -1,9 +1,8 @@
 from tkinter import *
-
 import tkinter as tk
 import tkinter.messagebox
-
 import time
+from database import Database
 from Repository.Repository import Repository
 
 
@@ -20,7 +19,6 @@ class Window(Frame):
 
         self.file_menu = Menu(self.menu, tearoff=0)
         self.file_menu.add_command(label="Connect", command=self.button_click_connect)
-        # self.file_menu.add_command(label="Create", command=self.button_click_create)
         self.file_menu.add_command(label="Retrieve", command=self.button_click_retrieve)
         self.file_menu.entryconfig("Retrieve", state="disabled")
         self.file_menu.add_separator()
@@ -55,7 +53,7 @@ class Window(Frame):
         self.lb = tk.Listbox(self, listvariable=var2)
         self.lb.place(x=50, y=70)
 
-        self.repository = Repository()
+        self.repository = Repository(Database())
 
     def update_clock(self):
         now = time.strftime("%H:%M:%S")
@@ -76,13 +74,11 @@ class Window(Frame):
 
     def button_click_connect(self):
         self.repository.initialize_repository()
+        self.file_menu.entryconfig("Connect", state="disabled")
         self.file_menu.entryconfig("Retrieve", state="normal")
 
-    def button_click_create(self):
-        pass
-
     def button_click_retrieve(self):
-        list_items = self.repository.get_language_data(year=1960)
+        list_items = self.repository.get_language_data(year=1945)
         for item in list_items:
             self.lb.insert('end', item)
 

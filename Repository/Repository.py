@@ -6,9 +6,9 @@ class Repository:
     database = None
     lang_dao = None
 
-    def __init__(self) -> None:
+    def __init__(self, database: Database) -> None:
         super().__init__()
-        self.database = Database()
+        self.database = database
         self.lang_dao = LanguageDao(self.database)
 
     def initialize_repository(self):
