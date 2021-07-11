@@ -28,6 +28,11 @@ class LanguageDao:
 
     def fetch_data(self, year):
         # And this is the named style:
+        list = []
         query = "select * from lang where first_appeared>=:year order by first_appeared"
         params = {"year": year}
-        return self.database.fetch_all(query=query, parameters=params)
+        items = self.database.fetch_all(query=query, parameters=params)
+        for item in items:
+            data = Language(item[0], item[1])
+            list.append(data)
+        return list
