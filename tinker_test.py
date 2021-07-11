@@ -78,7 +78,7 @@ class Window(Frame):
         self.file_menu.entryconfig("Retrieve", state="normal")
 
     def button_click_retrieve(self):
-        list_items = self.repository.get_language_data(year=1945)
+        list_items = self.repository.get_language_data(year=1965)
         for item in list_items:
             self.lb.insert('end', item)
 
