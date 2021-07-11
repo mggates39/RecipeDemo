@@ -4,34 +4,35 @@ import tkinter as tk
 import tkinter.messagebox
 
 import time
-from database import Database
+from Repository.Repository import Repository
 
 
 class Window(Frame):
-    data = None
+    repository = None
     message_number = 0
 
     def __init__(self, master=None):
         Frame.__init__(self, master)
         self.master = master
 
-        menu = Menu(self.master)
-        self.master.config(menu=menu)
+        self.menu = Menu(self.master)
+        self.master.config(menu=self.menu)
 
-        file_menu = Menu(menu, tearoff=0)
-        file_menu.add_command(label="Connect", command=self.button_click_connect)
-        file_menu.add_command(label="Create", command=self.button_click_create)
-        file_menu.add_command(label="Retrieve", command=self.button_click_retrieve)
-        file_menu.add_separator()
-        file_menu.add_command(label="Exit", command=self.exit_program)
-        menu.add_cascade(label="File", menu=file_menu)
+        self.file_menu = Menu(self.menu, tearoff=0)
+        self.file_menu.add_command(label="Connect", command=self.button_click_connect)
+        # self.file_menu.add_command(label="Create", command=self.button_click_create)
+        self.file_menu.add_command(label="Retrieve", command=self.button_click_retrieve)
+        self.file_menu.entryconfig("Retrieve", state="disabled")
+        self.file_menu.add_separator()
+        self.file_menu.add_command(label="Exit", command=self.exit_program)
+        self.menu.add_cascade(label="File", menu=self.file_menu)
 
-        edit_menu = Menu(menu, tearoff=0)
-        edit_menu.add_command(label="Undo")
-        edit_menu.add_command(label="Redo")
-        edit_menu.add_separator()
-        edit_menu.add_command(label="Test", command=self.button_click_message)
-        menu.add_cascade(label="Edit", menu=edit_menu)
+        self.edit_menu = Menu(self.menu, tearoff=0)
+        self.edit_menu.add_command(label="Undo")
+        self.edit_menu.add_command(label="Redo")
+        self.edit_menu.add_separator()
+        self.edit_menu.add_command(label="Test", command=self.button_click_message)
+        self.menu.add_cascade(label="Edit", menu=self.edit_menu)
 
         # widget can take all window
         self.pack(fill=BOTH, expand=1)
@@ -51,7 +52,7 @@ class Window(Frame):
         self.lb = tk.Listbox(self, listvariable=var2)
         self.lb.place(x=50, y=70)
 
-        self.data = Database()
+        self.repository = Repository()
 
     def update_clock(self):
         now = time.strftime("%H:%M:%S")
@@ -71,18 +72,19 @@ class Window(Frame):
             self.message_number = 0
 
     def button_click_connect(self):
-        self.data.connect()
+        self.repository.initialize_repository()
+        self.file_menu.entryconfig("Retrieve", state="normal")
 
     def button_click_create(self):
-        self.data.create_table()
+        pass
 
     def button_click_retrieve(self):
-        list_items = self.data.fetch_data(year=1960)
+        list_items = self.repository.get_language_data(year=1960)
         for item in list_items:
             self.lb.insert('end', item)
 
     def exit_program(self):
-        self.data.disconnect()
+        self.repository.disconnect()
         exit()
 
 

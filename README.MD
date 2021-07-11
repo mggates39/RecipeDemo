@@ -1,4 +1,4 @@
-#Recipe Database Demo#
+#Recipe Database Demo
 This is just a test application.  I'm going to play with tkinter for the 
 GUI and SQLite3 for the database.
 
