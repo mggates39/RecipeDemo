@@ -1,20 +1,40 @@
 
 class Ingredient:
-    create_sql: str = """CREATE TABLE ingredient (
+    create_sql: str = """CREATE TABLE ingredients (
         ingredient_id   INTEGER NOT NULL PRIMARY KEY,
         recipe_id       INTEGER REFERENCES recipe,
         item_id         INTEGER REFERENCES inventory_item,
+        modifier VARCHAR,
         quantity_name VARCHAR,
-        quantity REAL
-        )"""
+        quantity REAL,
+        units VARCHAR
+    )"""
 
-    def __init__(self, ingredient_id, recipe_id, item_id, quantity_name, quantity) -> None:
+    insert_sql: str = """INSERT INTO ingredients (
+        recipe_id,
+        item_id,
+        modifier,
+        quantity_name,
+        quantity,
+        units
+    ) values (
+        :recipe_id,
+        :item_id,
+        :modifier,
+        :quantity_name,
+        :quantity,
+        :units
+    )"""
+
+    def __init__(self, ingredient_id, recipe_id, item_id, quantity_name, quantity, units, modifier) -> None:
         super().__init__()
         self.__ingredient_id = ingredient_id
         self.__recipe_id = recipe_id
         self.__item_id = item_id
         self.__quantity_name = quantity_name
         self.__quantity = quantity
+        self.__units = units
+        self.__modifier = modifier
 
     @property
     def ingredient_id(self):
@@ -49,9 +69,17 @@ class Ingredient:
         self.__quantity_name = quantity_name
 
     @property
-    def quantity(self):
-        return self.__quantity
+    def modifier(self):
+        return self.__modifier
 
-    @quantity.setter
-    def quantity(self, quantity):
-        self.__quantity = quantity
+    @modifier.setter
+    def modifier(self, modifier):
+        self.__modifier = modifier
+
+    @property
+    def units(self):
+        return self.__units
+
+    @units.setter
+    def units(self, units):
+        self.__units = units
