@@ -14,7 +14,7 @@ class LanguageDao:
 
     def initialize_data(self):
         # This is the qmark style:
-        self.database.execute_query("insert into lang values (?, ?)", ("C", 1972))
+        self.database.execute_query("insert into languages values (?, ?)", ("C", 1972))
 
         # The qmark style used with executemany():
         lang_list = [
@@ -23,16 +23,16 @@ class LanguageDao:
             ("Go", 2009),
             ("Perl", 1984)
         ]
-        self.database.execute_many_query("insert into lang values (?, ?)", lang_list)
+        self.database.execute_many_query("insert into languages values (?, ?)", lang_list)
         self.database.commit()
 
     def fetch_data(self, year):
         # And this is the named style:
         list = []
-        query = "select * from lang where first_appeared>=:year order by first_appeared"
+        query = "select * from languages where first_appeared>=:year order by first_appeared"
         params = {"year": year}
         items = self.database.fetch_all(query=query, parameters=params)
         for item in items:
-            data = Language(item[0], item[1])
+            data = Language(item['name'], item['first_appeared'])
             list.append(data)
         return list

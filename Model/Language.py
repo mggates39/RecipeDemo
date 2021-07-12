@@ -1,6 +1,9 @@
 
 class Language:
-    create_sql: str = """create table lang (name, first_appeared)"""
+    create_sql: str = """create table languages (
+        name, 
+        first_appeared
+    )"""
 
     def __init__(self, name, first_appeared) -> None:
         super().__init__()

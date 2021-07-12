@@ -1,10 +1,10 @@
 
 class Recipe:
-    create_sql: str = """CREATE TABLE recipe (
+    create_sql: str = """CREATE TABLE recipes (
         recipe_id   INTEGER NOT NULL PRIMARY KEY,
         name VARCHAR,
         description VARCHAR
-        )"""
+    )"""
 
     def __init__(self, recipe_id, name, description) -> None:
         super().__init__()
