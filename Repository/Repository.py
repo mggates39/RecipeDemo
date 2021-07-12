@@ -27,6 +27,7 @@ class Repository:
             self.language_dao.initialize_data()
             self.recipe_dao.create_table()
             self.inventory_item_dao.create_table()
+            self.inventory_item_dao.initialize_data()
             self.ingredient_dao.create_table()
 
         self.verify_database_version()
