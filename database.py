@@ -9,6 +9,7 @@ class Database:
     def connect(self):
         if self.con is None:
             self.con = sqlite3.connect("example.db")
+            self.con.row_factory = sqlite3.Row
 
     def is_database_valid(self) -> bool:
         self.create_cursor()
